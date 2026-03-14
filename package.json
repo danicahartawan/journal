@@ -1,0 +1,16 @@
+{
+  "name": "journaldraft",
+  "version": "1.0.0",
+  "description": "AI workspace for investigative journalists",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "exa-js": "^1.0.0",
+    "express": "^4.21.0"
+  }
+}

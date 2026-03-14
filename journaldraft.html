@@ -190,9 +190,9 @@
           <button class="quick-action-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>Map connections</button>
         </div>
         <div class="agent-section">
-          <div class="section-label">Neural search</div>
+          <div class="section-label">Neural search <span id="exa-status" style="font-weight:400;color:var(--text-muted);font-size:11px"></span></div>
           <div class="agent-box">
-            <textarea class="agent-input" placeholder="Track signals, connect story threads, and surface emerging narratives" rows="2"></textarea>
+            <textarea class="agent-input" id="neural-search-input" placeholder="Track signals, connect story threads, and surface emerging narratives" rows="2"></textarea>
             <div class="agent-toolbar">
               <button class="agent-chip mention"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"/></svg>Mention</button>
               <button class="agent-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>GPT OSS <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
@@ -200,10 +200,11 @@
               <button class="agent-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="10" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
               <div class="agent-toolbar-right">
                 <button class="icon-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
-                <button class="send-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg></button>
+                <button class="send-btn" id="neural-search-send" title="Search with Exa" onclick="runNeuralSearch()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg></button>
               </div>
             </div>
           </div>
+          <div id="exa-search-results" class="exa-results" style="display:none;margin-top:16px"></div>
         </div>
         <div class="recent-section">
           <div class="recent-header">
@@ -297,6 +298,17 @@
     </div>
   </div>
 </div>
+<style>
+.exa-results { border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.exa-result { padding: 14px 16px; border-bottom: 1px solid var(--border); }
+.exa-result:last-child { border-bottom: none; }
+.exa-result a { color: var(--blue); font-weight: 500; text-decoration: none; }
+.exa-result a:hover { text-decoration: underline; }
+.exa-result-snippet { font-size: 12px; color: var(--text-muted); margin-top: 6px; line-height: 1.45; }
+.exa-loading { padding: 16px; text-align: center; color: var(--text-muted); font-size: 13px; }
+.exa-error { padding: 16px; color: #dc2626; font-size: 13px; }
+.exa-empty { padding: 16px; color: var(--text-muted); font-size: 13px; }
+</style>
 <script>
 function showPage(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -304,5 +316,57 @@ function showPage(page) {
   document.getElementById('page-' + page).classList.add('active');
   document.getElementById('nav-' + page).classList.add('active');
 }
+
+async function runNeuralSearch() {
+  const input = document.getElementById('neural-search-input');
+  const resultsEl = document.getElementById('exa-search-results');
+  const statusEl = document.getElementById('exa-status');
+  const sendBtn = document.getElementById('neural-search-send');
+  const query = (input?.value || '').trim();
+  if (!query) return;
+
+  resultsEl.style.display = 'block';
+  resultsEl.innerHTML = '<div class="exa-loading">Searching…</div>';
+  if (statusEl) statusEl.textContent = '';
+  if (sendBtn) sendBtn.disabled = true;
+
+  try {
+    const res = await fetch('/api/exa-search', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Search failed');
+
+    const results = data.results || [];
+    if (results.length === 0) {
+      resultsEl.innerHTML = '<div class="exa-empty">No results found.</div>';
+    } else {
+      resultsEl.innerHTML = results.map(r => {
+        const title = r.title || new URL(r.url || '').hostname;
+        const raw = Array.isArray(r.highlights) ? r.highlights.join(' ') : (r.highlights || r.text || r.text_raw || '');
+        const snip = String(raw).slice(0, 280) + (String(raw).length > 280 ? '…' : '');
+        return `<div class="exa-result"><a href="${r.url || '#'}" target="_blank" rel="noopener">${escapeHtml(title)}</a><div class="exa-result-snippet">${escapeHtml(snip)}</div></div>`;
+      }).join('');
+    }
+    if (statusEl) statusEl.textContent = '· Exa';
+  } catch (err) {
+    resultsEl.innerHTML = `<div class="exa-error">${escapeHtml(err.message)}</div>`;
+  }
+  if (sendBtn) sendBtn.disabled = false;
+}
+
+function escapeHtml(s) {
+  if (!s) return '';
+  const div = document.createElement('div');
+  div.textContent = s;
+  return div.innerHTML;
+}
+
+document.getElementById('neural-search-input')?.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); runNeuralSearch(); }
+});
+document.getElementById('neural-search-send')?.addEventListener('click', runNeuralSearch);
 </script>
 </body></html>
