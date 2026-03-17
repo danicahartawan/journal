@@ -122,6 +122,169 @@
   .agent-action-chip { display: flex; align-items: center; gap: 6px; background: #fff; border: 1px solid var(--border); border-radius: 20px; padding: 5px 12px; font-size: 12px; font-weight: 500; cursor: pointer; color: var(--foreground); font-family: inherit; transition: background 0.15s, border-color 0.15s; }
   .agent-action-chip:hover { background: var(--muted); border-color: #d4d4d4; }
   svg { vertical-align: middle; }
+  .reading-section { margin-bottom: 40px; }
+  .reading-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .reading-title { font-size: 16px; font-weight: 600; color: var(--foreground); }
+  .see-more-link { font-size: 13px; color: var(--text-muted); text-decoration: none; transition: color 0.15s; }
+  .see-more-link:hover { color: var(--foreground); }
+  .book-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 24px; }
+  .book-card { cursor: pointer; transition: transform 0.2s; }
+  .book-card:hover { transform: translateY(-4px); }
+  .book-cover { width: 100%; aspect-ratio: 2/3; border-radius: var(--radius); overflow: hidden; background: var(--muted); margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+  .book-cover img { width: 100%; height: 100%; object-fit: cover; }
+  .book-info { text-align: left; }
+  .book-title { font-size: 13px; font-weight: 500; color: var(--foreground); margin-bottom: 4px; line-height: 1.4; }
+  .book-author { font-size: 12px; color: var(--text-muted); }
+  .library-neural-search { position: fixed; bottom: 32px; left: calc(50% + calc(var(--sidebar-width) / 2)); transform: translateX(-50%); width: calc(100% - var(--sidebar-width) - 120px); max-width: 900px; z-index: 100; }
+  .library-search-box { border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+  .library-search-input { width: 100%; border: none; outline: none; font-size: 14px; color: var(--foreground); background: transparent; padding: 16px 16px 8px; font-family: inherit; resize: none; min-height: 50px; }
+  .library-search-input::placeholder { color: var(--text-muted); }
+  .library-search-toolbar { display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-top: 1px solid var(--border); }
+  .journal-editor { display: none; flex: 1; flex-direction: column; overflow: hidden; }
+  .journal-editor.active { display: flex; }
+  .journal-editor-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; border-bottom: 1px solid var(--border); }
+  .breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-muted); }
+  .breadcrumb-separator { color: var(--text-muted); }
+  .breadcrumb-item { color: var(--text-muted); text-decoration: none; transition: color 0.15s; }
+  .breadcrumb-item:hover { color: var(--foreground); }
+  .breadcrumb-current { color: var(--foreground); font-weight: 500; display: flex; align-items: center; gap: 6px; }
+  .edit-icon { width: 14px; height: 14px; color: var(--text-muted); cursor: pointer; }
+  .export-btn { display: flex; align-items: center; gap: 6px; background: none; border: 1px solid var(--border); border-radius: 6px; padding: 5px 10px; font-size: 12px; font-weight: 500; cursor: pointer; color: var(--foreground); font-family: inherit; transition: background 0.15s; }
+  .export-btn:hover { background: var(--muted); }
+  .journal-toolbar { display: flex; align-items: center; gap: 4px; padding: 10px 20px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+  .toolbar-group { display: flex; align-items: center; gap: 4px; padding-right: 8px; border-right: 1px solid var(--border); }
+  .toolbar-group:last-child { border-right: none; }
+  .toolbar-dropdown { display: flex; align-items: center; gap: 4px; background: none; border: none; border-radius: 6px; padding: 4px 8px; font-size: 12px; font-weight: 500; cursor: pointer; color: var(--foreground); font-family: inherit; transition: background 0.15s; }
+  .toolbar-dropdown:hover { background: var(--accent); }
+  .toolbar-icon-btn { background: none; border: none; border-radius: 6px; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.15s; color: var(--foreground); }
+  .toolbar-icon-btn:hover { background: var(--accent); }
+  .toolbar-icon-btn.active { background: var(--accent); }
+  .toolbar-special-btn { display: flex; align-items: center; gap: 5px; background: none; border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; font-size: 12px; font-weight: 500; cursor: pointer; color: var(--foreground); font-family: inherit; transition: background 0.15s; }
+  .toolbar-special-btn:hover { background: var(--accent); }
+  .toolbar-spacer { flex: 1; }
+  .actions-count { font-size: 12px; color: var(--text-muted); }
+  .sources-btn { display: flex; align-items: center; gap: 6px; background: var(--muted); border: 1px solid var(--border); border-radius: 6px; padding: 5px 12px; font-size: 12px; font-weight: 500; cursor: pointer; color: var(--foreground); font-family: inherit; transition: background 0.15s; }
+  .sources-btn:hover { background: var(--accent); }
+  .sources-sidebar { position: fixed; right: 0; top: 0; width: 320px; height: 100vh; background: var(--background); border-left: 1px solid var(--border); transform: translateX(100%); transition: transform 0.3s ease; z-index: 1000; display: flex; flex-direction: column; }
+  .sources-sidebar.active { transform: translateX(0); }
+  .sources-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--border); }
+  .sources-title { font-size: 16px; font-weight: 600; }
+  .sources-content { flex: 1; overflow-y: auto; padding: 16px 20px; }
+  .source-item { padding: 12px; border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 12px; cursor: pointer; transition: background 0.15s; }
+  .source-item:hover { background: var(--muted); }
+  .source-item-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; color: var(--foreground); }
+  .source-item-meta { font-size: 11px; color: var(--text-muted); }
+  .source-empty { text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 13px; }
+  .add-to-journal-btn { display: none; align-items: center; gap: 6px; background: var(--primary); color: white; border: none; border-radius: 6px; padding: 5px 12px; font-size: 12px; font-weight: 500; cursor: pointer; font-family: inherit; transition: opacity 0.15s; margin-left: 8px; }
+  .add-to-journal-btn:hover { opacity: 0.85; }
+  .add-to-journal-btn.visible { display: flex; }
+  .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); display: none; align-items: center; justify-content: center; z-index: 2000; }
+  .modal-overlay.active { display: flex; }
+  .modal { background: var(--background); border-radius: var(--radius-lg); padding: 24px; width: 90%; max-width: 440px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+  .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .modal-title { font-size: 18px; font-weight: 600; }
+  .modal-body { margin-bottom: 20px; }
+  .journal-option { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 8px; cursor: pointer; transition: background 0.15s; }
+  .journal-option:hover { background: var(--muted); }
+  .journal-option input[type="radio"] { width: 16px; height: 16px; accent-color: var(--blue); cursor: pointer; }
+  .journal-option-label { flex: 1; font-size: 14px; cursor: pointer; }
+  .modal-footer { display: flex; gap: 8px; justify-content: flex-end; }
+  .modal-btn { padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit; transition: opacity 0.15s; border: none; }
+  .modal-btn-cancel { background: var(--muted); color: var(--foreground); }
+  .modal-btn-cancel:hover { opacity: 0.85; }
+  .modal-btn-primary { background: var(--primary); color: white; }
+  .modal-btn-primary:hover { opacity: 0.85; }
+  .source-tabs { display: none; flex-wrap: wrap; gap: 4px; padding: 8px 20px; border-bottom: 1px solid var(--border); background: var(--sidebar-bg); align-items: center; }
+  .source-tabs.active { display: flex; }
+  .source-tab { display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 6px 6px 0 0; font-size: 12px; background: var(--background); border: 1px solid var(--border); border-bottom: none; cursor: pointer; transition: background 0.15s; max-width: 180px; }
+  .source-tab:hover { background: var(--muted); }
+  .source-tab.active-tab { background: var(--background); font-weight: 500; border-bottom: 2px solid var(--background); margin-bottom: -1px; }
+  .source-tab-title { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .source-tab-close { display: flex; align-items: center; justify-content: center; width: 16px; height: 16px; border-radius: 3px; transition: background 0.15s; }
+  .source-tab-close:hover { background: var(--accent); }
+  .editor-tab { padding: 6px 12px; border-radius: 6px 6px 0 0; font-size: 12px; background: var(--background); border: 1px solid var(--border); border-bottom: none; cursor: pointer; font-weight: 500; }
+  .split-view { display: none; flex: 1; overflow: hidden; }
+  .split-view.active { display: flex; }
+  .split-panel { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+  .split-panel.source-panel { border-right: 1px solid var(--border); background: var(--muted); }
+  .split-panel-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--background); }
+  .split-panel-title { font-size: 14px; font-weight: 500; }
+  .split-panel-content { flex: 1; overflow-y: auto; padding: 20px; }
+  .source-viewer { background: var(--background); }
+  .source-viewer iframe { width: 100%; height: 100%; border: none; }
+  .source-content { font-size: 14px; line-height: 1.7; color: var(--foreground); }
+  .source-content h1 { font-size: 24px; font-weight: 600; margin-bottom: 16px; }
+  .source-content h2 { font-size: 20px; font-weight: 600; margin-top: 24px; margin-bottom: 12px; }
+  .source-content p { margin-bottom: 12px; }
+  .chat-sidebar { position: fixed; right: 0; top: 0; width: 400px; height: 100vh; background: #1a1a1a; color: #fff; transform: translateX(100%); transition: transform 0.3s ease; z-index: 1001; display: flex; flex-direction: column; }
+  .chat-sidebar.active { transform: translateX(0); }
+  .chat-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid #333; }
+  .chat-header-title { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; }
+  .chat-dropdown { background: #2a2a2a; border: 1px solid #444; border-radius: 6px; padding: 6px 10px; font-size: 13px; color: #fff; cursor: pointer; }
+  .chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+  .chat-message { display: flex; flex-direction: column; gap: 8px; }
+  .chat-message.user { align-items: flex-end; }
+  .chat-bubble { max-width: 85%; padding: 12px 14px; border-radius: 12px; font-size: 14px; line-height: 1.5; }
+  .chat-bubble.user { background: #2563eb; color: #fff; border-radius: 12px 12px 4px 12px; }
+  .chat-bubble.assistant { background: #2a2a2a; color: #e5e5e5; border-radius: 12px 12px 12px 4px; }
+  .chat-bubble code { background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+  .chat-bubble strong { font-weight: 600; }
+  .chat-bubble em { font-style: italic; }
+  .chat-suggestions { padding: 12px 20px; border-top: 1px solid #333; }
+  .chat-suggestions-label { font-size: 11px; color: #888; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .suggestion-chip { display: block; background: #2a2a2a; border: 1px solid #444; border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; font-size: 13px; color: #e5e5e5; cursor: pointer; transition: background 0.15s; text-align: left; width: 100%; }
+  .suggestion-chip:hover { background: #333; }
+  .chat-input-container { padding: 16px 20px; border-top: 1px solid #333; }
+  .chat-file-indicator { display: none; align-items: center; gap: 8px; padding: 8px 12px; background: #2a2a2a; border-radius: 6px; margin-bottom: 12px; font-size: 12px; }
+  .chat-file-indicator.active { display: flex; }
+  .chat-file-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .chat-input-wrapper { display: flex; align-items: center; gap: 8px; background: #2a2a2a; border: 1px solid #444; border-radius: 8px; padding: 4px; }
+  .chat-input { flex: 1; background: none; border: none; outline: none; color: #fff; font-size: 14px; padding: 8px; font-family: inherit; resize: none; max-height: 120px; }
+  .chat-input::placeholder { color: #888; }
+  .chat-mention-btn { background: none; border: none; color: #2563eb; font-size: 14px; font-weight: 600; cursor: pointer; padding: 4px 8px; border-radius: 4px; transition: background 0.15s; }
+  .chat-mention-btn:hover { background: #333; }
+  .chat-send-btn { background: none; border: none; color: #888; cursor: pointer; padding: 6px; border-radius: 4px; transition: background 0.15s; display: flex; align-items: center; justify-content: center; }
+  .chat-send-btn:hover { background: #333; }
+  .chat-send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .chat-toggle-btn { position: fixed; right: 20px; bottom: 20px; width: 56px; height: 56px; background: var(--primary); color: white; border: none; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor: pointer; display: none; align-items: center; justify-content: center; z-index: 999; transition: transform 0.2s; }
+  .chat-toggle-btn:hover { transform: scale(1.05); }
+  .chat-toggle-btn.hidden { display: none; }
+  .mention-dropdown { position: absolute; bottom: 100%; left: 0; right: 0; background: #2a2a2a; border: 1px solid #444; border-radius: 6px; margin-bottom: 8px; max-height: 200px; overflow-y: auto; display: none; }
+  .mention-dropdown.active { display: block; }
+  .mention-item { padding: 10px 12px; cursor: pointer; font-size: 13px; border-bottom: 1px solid #333; transition: background 0.15s; }
+  .mention-item:last-child { border-bottom: none; }
+  .mention-item:hover { background: #333; }
+  .mention-item-title { font-weight: 500; margin-bottom: 2px; }
+  .mention-item-url { font-size: 11px; color: #888; }
+  .chat-loading { display: flex; gap: 4px; padding: 12px; }
+  .chat-loading-dot { width: 8px; height: 8px; background: #888; border-radius: 50%; animation: chat-loading 1.4s infinite both; }
+  .chat-loading-dot:nth-child(1) { animation-delay: 0s; }
+  .chat-loading-dot:nth-child(2) { animation-delay: 0.2s; }
+  .chat-loading-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes chat-loading { 0%, 80%, 100% { opacity: 0.3; } 40% { opacity: 1; } }
+  .journal-content { flex: 1; overflow-y: auto; padding: 32px 80px; max-width: 1000px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; }
+  .journal-editor-area { min-height: 400px; outline: none; font-size: 14px; line-height: 1.7; color: var(--foreground); flex: 1; cursor: text; }
+  .journal-editor-area h1 { font-size: 32px; font-weight: 600; margin-bottom: 24px; line-height: 1.3; }
+  .journal-editor-area h2 { font-size: 20px; font-weight: 600; margin-top: 32px; margin-bottom: 16px; line-height: 1.4; }
+  .journal-editor-area h3 { font-size: 16px; font-weight: 600; margin-top: 24px; margin-bottom: 12px; line-height: 1.4; }
+  .journal-editor-area p { margin-bottom: 16px; }
+  .journal-editor-area ul, .journal-editor-area ol { margin-bottom: 16px; padding-left: 24px; }
+  .journal-editor-area li { margin-bottom: 8px; }
+  .journal-editor-area strong { font-weight: 600; }
+  .journal-editor-area em { font-style: italic; }
+  .journal-editor-area code { background: var(--muted); padding: 2px 6px; border-radius: 4px; font-size: 13px; font-family: monospace; }
+  .journal-editor-area a { color: var(--blue); text-decoration: none; }
+  .journal-editor-area a:hover { text-decoration: underline; }
+  .collapsible-section { margin-bottom: 24px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .collapsible-header { display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: var(--muted); cursor: pointer; transition: background 0.15s; }
+  .collapsible-header:hover { background: var(--accent); }
+  .collapsible-title { font-size: 16px; font-weight: 600; flex: 1; }
+  .collapsible-icon { transition: transform 0.2s; }
+  .collapsible-icon.collapsed { transform: rotate(-90deg); }
+  .collapsible-content { padding: 16px; display: none; }
+  .collapsible-content.active { display: block; }
+  .emoji-wave { display: inline-block; animation: wave 0.5s ease-in-out; }
+  @keyframes wave { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(20deg); } }
 </style>
 </head><body>
 <div class="app">
@@ -142,6 +305,9 @@
       </a>
       <a class="sidebar-nav-item" id="nav-agent" href="#" onclick="showPage('agent');return false;">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="5"/><path d="M3 21v-2a7 7 0 0 1 7-7h4a7 7 0 0 1 7 7v2"/></svg>Agent
+      </a>
+      <a class="sidebar-nav-item" id="nav-journals" href="#" onclick="showPage('journals');return false;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Journals
       </a>
     </nav>
     <div class="sidebar-section-label">Private</div>
@@ -234,26 +400,42 @@
           <button class="toolbar-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Display &nbsp;<span style="color:var(--text-muted);font-weight:400">Table</span></button>
           <button class="toolbar-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="18" x2="11" y2="18"/></svg> Sort</button>
           <button class="toolbar-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg> Filter</button>
-          <span class="file-count">9 files in library</span>
+          <button class="add-to-journal-btn" id="add-to-journal-btn" onclick="showAddToJournalModal()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            Add to Journal
+          </button>
+          <span class="file-count" id="library-file-count">0 files in library</span>
         </div>
         <div class="library-table">
           <table>
             <thead><tr>
-              <th class="checkbox-cell"><input type="checkbox"></th>
+              <th class="checkbox-cell"><input type="checkbox" id="select-all-checkbox" onchange="toggleSelectAll(this)"></th>
               <th>Title</th><th>Authors</th><th>Added</th><th>Full text</th><th>Viewed</th><th>File type</th><th>Summary</th><th>Tags</th><th>Progress</th>
             </tr></thead>
-            <tbody>
-              <tr class="file-row"><td class="checkbox-cell"><input type="checkbox"></td><td><div class="file-title-cell"><svg class="file-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>SEC Filing - TechCorp Q4 2025</div></td><td></td><td>Yesterday</td><td><span class="badge badge-available">Available</span></td><td>Mar 11, 2026</td><td>Document</td><td style="max-width:160px;color:var(--text-muted);font-size:12px">Quarterly financial disclosure reveals...</td><td></td><td><span class="progress-bar-container"><div class="progress-bar-fill" style="width:100%"></div></span><span class="progress-text">100%</span></td></tr>
-              <tr class="file-row"><td class="checkbox-cell"><input type="checkbox"></td><td><div class="file-title-cell"><svg class="file-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>NYT Coverage: Housing Crisis Analysis</div></td><td></td><td>Yesterday</td><td><span class="badge badge-available">Available</span></td><td>Mar 11, 2026</td><td>Document</td><td style="max-width:160px;color:var(--text-muted);font-size:12px">Major metropolitan areas showing patterns...</td><td></td><td><span class="progress-bar-container"><div class="progress-bar-fill" style="width:41%"></div></span><span class="progress-text">41%</span></td></tr>
-              <tr class="file-row"><td class="checkbox-cell"><input type="checkbox"></td><td><div class="file-title-cell"><svg class="file-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Court Documents - Smith v. Corporation</div></td><td></td><td>March 7, 2026</td><td><span class="badge badge-available">Available</span></td><td>Mar 9, 2026</td><td>Document</td><td style="max-width:160px;color:var(--text-muted);font-size:12px">Civil lawsuit reveals connections to...</td><td></td><td><span class="progress-bar-container"><div class="progress-bar-fill" style="width:22%"></div></span><span class="progress-text">22%</span></td></tr>
-              <tr class="file-row"><td class="checkbox-cell"><input type="checkbox"></td><td><div class="file-title-cell"><svg class="file-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Investigation Notes</div></td><td></td><td>March 7, 2026</td><td></td><td>Mar 7, 2026</td><td>Note</td><td></td><td></td><td></td></tr>
-              <tr class="file-row"><td class="checkbox-cell"><input type="checkbox"></td><td><div class="file-title-cell"><svg class="file-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Reuters: Climate Policy Changes Across States</div></td><td>Reuters Staff</td><td>March 7, 2026</td><td><span class="badge badge-available">Available</span></td><td>Mar 9, 2026</td><td>Document</td><td style="max-width:160px;color:var(--text-muted);font-size:12px">Policy shifts showing coordinated patterns...</td><td></td><td></td></tr>
-              <tr class="file-row"><td class="checkbox-cell"><input type="checkbox"></td><td><div class="file-title-cell"><svg class="file-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Source Interview Transcript - Whistleblower</div></td><td></td><td>March 6, 2026</td><td><span class="badge badge-unavailable">Content unavailable</span></td><td>Mar 7, 2026</td><td>Document</td><td></td><td></td><td></td></tr>
-              <tr class="file-row"><td class="checkbox-cell"><input type="checkbox"></td><td><div class="file-title-cell"><svg class="file-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Campaign Finance Database - Election 2024</div></td><td>FEC Records</td><td>September 14, 2025</td><td><span class="badge badge-available">Available</span></td><td>Mar 6, 2026</td><td>Document</td><td style="max-width:160px;color:var(--text-muted);font-size:12px">Donation patterns reveal network of...</td><td></td><td></td></tr>
-              <tr class="file-row"><td class="checkbox-cell"><input type="checkbox"></td><td><div class="file-title-cell"><svg class="file-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>ProPublica: Pharmaceutical Pricing Investigation</div></td><td>ProPublica Team</td><td>September 14, 2025</td><td><span class="badge badge-available">Available</span></td><td>Mar 6, 2026</td><td>Document</td><td style="max-width:160px;color:var(--text-muted);font-size:12px">Analysis uncovers systematic pricing...</td><td></td><td></td></tr>
-              <tr class="file-row"><td class="checkbox-cell"><input type="checkbox"></td><td><div class="file-title-cell"><svg class="file-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Getting Started with Journal</div></td><td></td><td>May 2, 2024</td><td></td><td></td><td>Note</td><td></td><td></td><td></td></tr>
+            <tbody id="library-table-body">
+              <tr class="library-empty-state">
+                <td colspan="10" style="text-align:center;padding:80px 20px;color:var(--text-muted);">
+                  Use neural search below to find and add articles to your library
+                </td>
+              </tr>
             </tbody>
           </table>
+        </div>
+        <!-- Fixed Neural Search Box -->
+        <div class="library-neural-search">
+          <div class="library-search-box">
+            <textarea class="library-search-input" placeholder="Track signals, connect story threads, and surface emerging narratives" rows="1"></textarea>
+            <div class="library-search-toolbar">
+              <button class="agent-chip mention"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"/></svg>Mention</button>
+              <button class="agent-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>GPT OSS <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+              <button class="agent-chip">250 words <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+              <button class="agent-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="10" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+              <div class="agent-toolbar-right">
+                <button class="icon-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+                <button class="send-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg></button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -296,7 +478,258 @@
         </div>
       </div>
     </div>
+    <!-- JOURNALS PAGE -->
+    <div class="page" id="page-journals">
+      <div class="topbar">
+        <div class="topbar-left"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Journals</div>
+        <div class="topbar-right"><button class="upgrade-btn-sm"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg> Upgrade</button></div>
+      </div>
+      <div style="padding:32px 40px;max-width:1200px">
+        <div class="reading-section">
+          <div class="reading-header">
+            <div class="reading-title">My Journals<span style="color:var(--text-muted);font-weight:400"> · 3 entries</span></div>
+            <a href="#" class="see-more-link">See more →</a>
+          </div>
+          <div class="book-grid">
+            <div class="book-card" onclick="openJournal('healthcare-fraud')">
+              <div class="book-cover" style="background: #f5f5f5; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#a3a3a3" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              </div>
+              <div class="book-info">
+                <div class="book-title">Healthcare Fraud Investigation</div>
+                <div class="book-author">Started March 10, 2026</div>
+              </div>
+            </div>
+            <div class="book-card" onclick="openJournal('tech-regulation')">
+              <div class="book-cover" style="background: #f5f5f5; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#a3a3a3" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              </div>
+              <div class="book-info">
+                <div class="book-title">Tech Regulation Notes</div>
+                <div class="book-author">Started March 8, 2026</div>
+              </div>
+            </div>
+            <div class="book-card" onclick="openJournal('climate-reporting')">
+              <div class="book-cover" style="background: #f5f5f5; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#a3a3a3" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              </div>
+              <div class="book-info">
+                <div class="book-title">Climate Reporting</div>
+                <div class="book-author">Started March 5, 2026</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- JOURNAL EDITOR -->
+    <div class="journal-editor" id="journal-editor">
+      <div class="journal-editor-header">
+        <div class="breadcrumb">
+          <a href="#" class="breadcrumb-item" onclick="closeJournal(); return false;">My Journals</a>
+          <span class="breadcrumb-separator">/</span>
+          <div class="breadcrumb-current">
+            <span id="journal-title-display">Healthcare Fraud Investigation</span>
+            <svg class="edit-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </div>
+        </div>
+        <button class="export-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export as .docx
+        </button>
+      </div>
+      <div class="journal-toolbar">
+        <div class="toolbar-group">
+          <button class="toolbar-dropdown">File</button>
+          <button class="toolbar-dropdown">Format</button>
+          <button class="toolbar-dropdown">Tools</button>
+        </div>
+        <div class="toolbar-group">
+          <button class="toolbar-dropdown">
+            Heading 1
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </div>
+        <div class="toolbar-group">
+          <button class="toolbar-icon-btn" title="Bold">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/><path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/></svg>
+          </button>
+          <button class="toolbar-icon-btn" title="Italic">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></svg>
+          </button>
+          <button class="toolbar-icon-btn" title="Underline">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3v7a6 6 0 0 0 6 6 6 6 0 0 0 6-6V3"/><line x1="4" y1="21" x2="20" y2="21"/></svg>
+          </button>
+          <button class="toolbar-icon-btn" title="Strikethrough">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4H9a3 3 0 0 0-2.83 4"/><path d="M14 12a4 4 0 0 1 0 8H6"/><line x1="4" y1="12" x2="20" y2="12"/></svg>
+          </button>
+        </div>
+        <div class="toolbar-group">
+          <button class="toolbar-icon-btn" title="Link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          </button>
+          <button class="toolbar-icon-btn" title="Code">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </button>
+        </div>
+        <div class="toolbar-group">
+          <button class="toolbar-icon-btn" title="Bullet list">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          </button>
+          <button class="toolbar-icon-btn" title="Numbered list">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><path d="M4 6h1v4"/><path d="M4 10h2"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+          </button>
+        </div>
+        <div class="toolbar-group">
+          <button class="toolbar-icon-btn" title="Align left">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="21" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="21" y1="18" x2="3" y2="18"/></svg>
+          </button>
+          <button class="toolbar-icon-btn" title="Align center">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="10" x2="6" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="18" y1="18" x2="6" y2="18"/></svg>
+          </button>
+          <button class="toolbar-icon-btn" title="Align right">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="21" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="21" y1="18" x2="3" y2="18"/></svg>
+          </button>
+        </div>
+        <div class="toolbar-group">
+          <button class="toolbar-special-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            Ask AI
+          </button>
+          <button class="toolbar-special-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            Cite
+          </button>
+        </div>
+        <div class="toolbar-spacer"></div>
+        <button class="sources-btn" onclick="toggleSourcesSidebar()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Sources
+        </button>
+      </div>
+      <!-- Source Tabs -->
+      <div class="source-tabs" id="source-tabs">
+        <div class="editor-tab">Editor</div>
+      </div>
+      <!-- Regular Editor View -->
+      <div class="journal-content" id="regular-editor-view" style="display: flex;">
+        <div class="journal-editor-area" contenteditable="true" id="main-editor" style="outline: none;">
+          <p><br></p>
+        </div>
+      </div>
+      <!-- Split View -->
+      <div class="split-view" id="split-view">
+        <div class="split-panel source-panel">
+          <div class="split-panel-header">
+            <div class="split-panel-title" id="source-title">Source</div>
+            <button class="icon-btn" onclick="closeSplitView()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+          <div class="split-panel-content source-viewer" id="source-viewer">
+            <div class="source-content">
+              <p>Loading source...</p>
+            </div>
+          </div>
+        </div>
+        <div class="split-panel editor-panel">
+          <div class="split-panel-header">
+            <div class="split-panel-title">Editor</div>
+          </div>
+          <div class="split-panel-content">
+            <div class="journal-editor-area" contenteditable="true" id="split-editor" style="outline: none;">
+              <p><br></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+  <!-- Sources Sidebar -->
+  <div class="sources-sidebar" id="sources-sidebar">
+    <div class="sources-header">
+      <div class="sources-title">Sources</div>
+      <button class="icon-btn" onclick="toggleSourcesSidebar()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="sources-content" id="sources-list">
+      <div class="source-empty">No sources added yet.<br><br>Add articles from your library to reference in this journal.</div>
+    </div>
+  </div>
+  <!-- Add to Journal Modal -->
+  <div class="modal-overlay" id="add-to-journal-modal" onclick="closeModalOnOverlay(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div class="modal-title">Add to Journal</div>
+        <button class="icon-btn" onclick="closeAddToJournalModal()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Select a journal to add the selected items:</p>
+        <label class="journal-option">
+          <input type="radio" name="journal-select" value="healthcare-fraud" checked>
+          <div class="journal-option-label">Healthcare Fraud Investigation</div>
+        </label>
+        <label class="journal-option">
+          <input type="radio" name="journal-select" value="tech-regulation">
+          <div class="journal-option-label">Tech Regulation Notes</div>
+        </label>
+        <label class="journal-option">
+          <input type="radio" name="journal-select" value="climate-reporting">
+          <div class="journal-option-label">Climate Reporting</div>
+        </label>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-btn modal-btn-cancel" onclick="closeAddToJournalModal()">Cancel</button>
+        <button class="modal-btn modal-btn-primary" onclick="addSelectedToJournal()">Add to Journal</button>
+      </div>
+    </div>
+  </div>
+  <!-- Chat Sidebar -->
+  <div class="chat-sidebar" id="chat-sidebar">
+    <div class="chat-header">
+      <div class="chat-header-title">
+        <select class="chat-dropdown">
+          <option>Select a chat</option>
+        </select>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+      </div>
+      <button class="icon-btn" onclick="toggleChatSidebar()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <!-- Messages will be inserted here -->
+    </div>
+    <div class="chat-suggestions" id="chat-suggestions">
+      <div class="chat-suggestions-label">Suggested Questions</div>
+      <button class="suggestion-chip" onclick="askSuggestion(this)">What are the key themes across my sources?</button>
+      <button class="suggestion-chip" onclick="askSuggestion(this)">Help me identify connections between these documents</button>
+      <button class="suggestion-chip" onclick="askSuggestion(this)">What gaps exist in my current research?</button>
+      <button class="suggestion-chip" onclick="askSuggestion(this)">Suggest a narrative structure for this story</button>
+    </div>
+    <div class="chat-input-container">
+      <div class="chat-file-indicator" id="chat-file-indicator">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <span class="chat-file-name" id="chat-file-name">Document name</span>
+        <button style="background:none;border:none;color:#888;cursor:pointer;" onclick="clearMentionedSource()">×</button>
+      </div>
+      <div class="chat-input-wrapper">
+        <div class="mention-dropdown" id="mention-dropdown"></div>
+        <button class="chat-mention-btn" onclick="showMentionDropdown()">@ Mention</button>
+        <textarea class="chat-input" id="chat-input" placeholder="Ask this file a question..." rows="1"></textarea>
+        <button class="chat-send-btn" id="chat-send-btn" onclick="sendChatMessage()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Chat Toggle Button -->
+  <button class="chat-toggle-btn" id="chat-toggle-btn" onclick="toggleChatSidebar()">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  </button>
 </div>
 <style>
 .exa-results { border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
@@ -315,6 +748,25 @@ function showPage(page) {
   document.querySelectorAll('.sidebar-nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('page-' + page).classList.add('active');
   document.getElementById('nav-' + page).classList.add('active');
+
+  // Hide journal editor if it's open
+  const journalEditor = document.getElementById('journal-editor');
+  if (journalEditor && journalEditor.classList.contains('active')) {
+    journalEditor.classList.remove('active');
+    currentJournalId = null;
+  }
+
+  // Close sources sidebar if open
+  const sidebar = document.getElementById('sources-sidebar');
+  if (sidebar && sidebar.classList.contains('active')) {
+    sidebar.classList.remove('active');
+  }
+
+  // Hide chat toggle button and close chat
+  const chatToggle = document.getElementById('chat-toggle-btn');
+  const chatSidebar = document.getElementById('chat-sidebar');
+  if (chatToggle) chatToggle.style.display = 'none';
+  if (chatSidebar) chatSidebar.classList.remove('active');
 }
 
 async function runNeuralSearch() {
@@ -368,5 +820,772 @@ document.getElementById('neural-search-input')?.addEventListener('keydown', func
   if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); runNeuralSearch(); }
 });
 document.getElementById('neural-search-send')?.addEventListener('click', runNeuralSearch);
+
+// Library search function
+async function runLibrarySearch() {
+  const input = document.querySelector('.library-search-input');
+  const tableBody = document.getElementById('library-table-body');
+  const fileCount = document.getElementById('library-file-count');
+  const query = (input?.value || '').trim();
+  if (!query) return;
+
+  // Show loading state
+  tableBody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:40px 20px;color:var(--text-muted);">Searching with Exa…</td></tr>';
+
+  try {
+    const res = await fetch('/api/exa-search', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Search failed');
+
+    const results = data.results || [];
+    if (results.length === 0) {
+      tableBody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:40px 20px;color:var(--text-muted);">No results found. Try a different search.</td></tr>';
+      fileCount.textContent = '0 files in library';
+    } else {
+      // Prepare items for Supabase
+      const libraryItems = results.map(r => {
+        const title = r.title || new URL(r.url || '').hostname;
+        const raw = Array.isArray(r.highlights) ? r.highlights.join(' ') : (r.highlights || r.text || r.text_raw || '');
+        const summary = String(raw);
+        return {
+          url: r.url,
+          title: title,
+          summary: summary,
+          full_text: raw,
+          created_at: new Date().toISOString()
+        };
+      });
+
+      // Save to Supabase
+      await saveLibraryToSupabase(libraryItems);
+
+      // Populate table with results
+      tableBody.innerHTML = results.map(r => {
+        const title = r.title || new URL(r.url || '').hostname;
+        const raw = Array.isArray(r.highlights) ? r.highlights.join(' ') : (r.highlights || r.text || r.text_raw || '');
+        const summary = String(raw).slice(0, 80) + (String(raw).length > 80 ? '…' : '');
+        const today = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+        return `<tr class="file-row" data-url="${r.url}" data-title="${escapeHtml(title)}" data-summary="${escapeHtml(String(raw))}">
+          <td class="checkbox-cell"><input type="checkbox"></td>
+          <td><div class="file-title-cell">
+            <svg class="file-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <a href="${r.url || '#'}" target="_blank" rel="noopener" style="color:var(--foreground);text-decoration:none">${escapeHtml(title)}</a>
+          </div></td>
+          <td></td>
+          <td>${today}</td>
+          <td><span class="badge badge-available">Available</span></td>
+          <td>${today}</td>
+          <td>Document</td>
+          <td style="max-width:160px;color:var(--text-muted);font-size:12px">${escapeHtml(summary)}</td>
+          <td></td>
+          <td></td>
+        </tr>`;
+      }).join('');
+
+      fileCount.textContent = `${results.length} file${results.length === 1 ? '' : 's'} in library`;
+
+      // Reset select-all checkbox
+      const selectAllCheckbox = document.getElementById('select-all-checkbox');
+      if (selectAllCheckbox) selectAllCheckbox.checked = false;
+
+      // Reset add to journal button
+      updateAddToJournalButton();
+    }
+  } catch (err) {
+    tableBody.innerHTML = `<tr><td colspan="10" style="text-align:center;padding:40px 20px;color:#dc2626;">Error: ${escapeHtml(err.message)}</td></tr>`;
+  }
+}
+
+// Add event listeners for library search
+document.querySelector('.library-search-input')?.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); runLibrarySearch(); }
+});
+document.querySelector('.library-search-toolbar .send-btn')?.addEventListener('click', runLibrarySearch);
+
+// Journal editor functions
+let currentJournalId = null;
+
+async function openJournal(journalId) {
+  currentJournalId = journalId;
+
+  // Hide ALL pages
+  document.querySelectorAll('.page').forEach(page => {
+    page.classList.remove('active');
+  });
+
+  // Show the journal editor
+  document.getElementById('journal-editor').classList.add('active');
+
+  // Update title based on journalId (you can expand this with real data)
+  const titles = {
+    'healthcare-fraud': 'Healthcare Fraud Investigation',
+    'tech-regulation': 'Tech Regulation Notes',
+    'climate-reporting': 'Climate Reporting'
+  };
+
+  const titleEl = document.getElementById('journal-title-display');
+  if (titleEl && titles[journalId]) {
+    titleEl.textContent = titles[journalId];
+  }
+
+  // Load sources from Supabase
+  const sources = await loadJournalSourcesFromSupabase(journalId);
+  if (sources && sources.length > 0) {
+    journalSources[journalId] = sources;
+  }
+
+  // Update sources sidebar
+  updateSourcesSidebar(journalId);
+
+  // Reset opened sources and switch to editor view
+  openedSources = [];
+  currentSourceIndex = -1;
+  switchToEditor();
+
+  // Show chat toggle button
+  const chatSidebar = document.getElementById('chat-sidebar');
+  const chatToggle = document.getElementById('chat-toggle-btn');
+  if (!chatSidebar.classList.contains('active')) {
+    chatToggle.style.display = 'flex';
+  }
+
+  // Reset chat
+  chatMessages = [];
+  document.getElementById('chat-messages').innerHTML = '';
+  document.getElementById('chat-suggestions').style.display = 'block';
+
+  // Focus the editor
+  setTimeout(() => {
+    const editor = document.getElementById('main-editor');
+    if (editor) {
+      editor.focus();
+      // Place cursor at the end
+      const range = document.createRange();
+      const sel = window.getSelection();
+      range.selectNodeContents(editor);
+      range.collapse(false);
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+  }, 100);
+}
+
+function closeJournal() {
+  // Hide the journal editor
+  document.getElementById('journal-editor').classList.remove('active');
+
+  // Show the journals page
+  document.getElementById('page-journals').classList.add('active');
+
+  // Make sure nav item is active
+  document.querySelectorAll('.sidebar-nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('nav-journals').classList.add('active');
+
+  // Close sources sidebar if open
+  const sidebar = document.getElementById('sources-sidebar');
+  if (sidebar.classList.contains('active')) {
+    sidebar.classList.remove('active');
+  }
+
+  // Hide chat toggle button and close chat
+  const chatToggle = document.getElementById('chat-toggle-btn');
+  const chatSidebar = document.getElementById('chat-sidebar');
+  if (chatToggle) chatToggle.style.display = 'none';
+  if (chatSidebar) chatSidebar.classList.remove('active');
+
+  currentJournalId = null;
+}
+
+function toggleCollapsible(headerEl) {
+  const section = headerEl.parentElement;
+  const content = section.querySelector('.collapsible-content');
+  const icon = headerEl.querySelector('.collapsible-icon');
+
+  if (content.classList.contains('active')) {
+    content.classList.remove('active');
+    icon.classList.add('collapsed');
+  } else {
+    content.classList.add('active');
+    icon.classList.remove('collapsed');
+  }
+}
+
+// Sources sidebar functions
+function toggleSourcesSidebar() {
+  const sidebar = document.getElementById('sources-sidebar');
+  sidebar.classList.toggle('active');
+}
+
+// Add to journal modal functions
+function showAddToJournalModal() {
+  const modal = document.getElementById('add-to-journal-modal');
+  modal.classList.add('active');
+}
+
+function closeAddToJournalModal() {
+  const modal = document.getElementById('add-to-journal-modal');
+  modal.classList.remove('active');
+}
+
+function closeModalOnOverlay(event) {
+  if (event.target.classList.contains('modal-overlay')) {
+    closeAddToJournalModal();
+  }
+}
+
+// Store selected items and journal sources
+let journalSources = {
+  'healthcare-fraud': [],
+  'tech-regulation': [],
+  'climate-reporting': []
+};
+
+async function addSelectedToJournal() {
+  const selectedJournal = document.querySelector('input[name="journal-select"]:checked')?.value;
+  if (!selectedJournal) return;
+
+  // Get all checked items in library
+  const checkboxes = document.querySelectorAll('#library-table-body input[type="checkbox"]:checked');
+  const selectedItems = [];
+
+  checkboxes.forEach(cb => {
+    const row = cb.closest('tr');
+    if (row && !row.classList.contains('library-empty-state')) {
+      selectedItems.push({
+        title: row.dataset.title || row.querySelector('a')?.textContent || '',
+        url: row.dataset.url || row.querySelector('a')?.href || '',
+        summary: row.dataset.summary || ''
+      });
+    }
+  });
+
+  // Add to journal sources
+  if (!journalSources[selectedJournal]) {
+    journalSources[selectedJournal] = [];
+  }
+
+  selectedItems.forEach(item => {
+    // Check if not already added
+    if (!journalSources[selectedJournal].find(s => s.url === item.url)) {
+      journalSources[selectedJournal].push(item);
+    }
+  });
+
+  // Save to Supabase
+  await saveJournalSourcesToSupabase(selectedJournal, journalSources[selectedJournal]);
+
+  // Uncheck all items
+  checkboxes.forEach(cb => cb.checked = false);
+
+  // Update button visibility
+  updateAddToJournalButton();
+
+  // Close modal
+  closeAddToJournalModal();
+
+  // Update sources sidebar if this journal is currently open
+  if (currentJournalId === selectedJournal) {
+    updateSourcesSidebar(selectedJournal);
+  }
+
+  // Show success message (optional)
+  console.log(`Added ${selectedItems.length} item(s) to ${selectedJournal}`);
+}
+
+// Update "Add to Journal" button visibility based on selection
+function updateAddToJournalButton() {
+  const checkboxes = document.querySelectorAll('#library-table-body input[type="checkbox"]:checked');
+  const btn = document.getElementById('add-to-journal-btn');
+
+  if (checkboxes.length > 0) {
+    btn.classList.add('visible');
+    btn.innerHTML = `
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      Add ${checkboxes.length} to Journal
+    `;
+  } else {
+    btn.classList.remove('visible');
+  }
+}
+
+// Store opened source tabs
+let openedSources = [];
+let currentSourceIndex = -1;
+
+// Update sources sidebar when opening journal
+function updateSourcesSidebar(journalId) {
+  const sourcesList = document.getElementById('sources-list');
+  const sources = journalSources[journalId] || [];
+
+  if (sources.length === 0) {
+    sourcesList.innerHTML = '<div class="source-empty">No sources added yet.<br><br>Add articles from your library to reference in this journal.</div>';
+  } else {
+    sourcesList.innerHTML = sources.map((source, index) => `
+      <div class="source-item" onclick="openSourceInSplitView(${index})">
+        <div class="source-item-title">${escapeHtml(source.title)}</div>
+        <div class="source-item-meta">${escapeHtml(source.summary.slice(0, 100))}${source.summary.length > 100 ? '...' : ''}</div>
+      </div>
+    `).join('');
+  }
+}
+
+// Open source in split view
+function openSourceInSplitView(sourceIndex) {
+  if (!currentJournalId) return;
+
+  const sources = journalSources[currentJournalId] || [];
+  const source = sources[sourceIndex];
+  if (!source) return;
+
+  // Check if already opened
+  const existingIndex = openedSources.findIndex(s => s.url === source.url);
+  if (existingIndex !== -1) {
+    switchToSource(existingIndex);
+    return;
+  }
+
+  // Add to opened sources
+  openedSources.push(source);
+  currentSourceIndex = openedSources.length - 1;
+
+  // Update tabs
+  updateSourceTabs();
+
+  // Show split view
+  showSplitView(source);
+}
+
+// Update source tabs
+function updateSourceTabs() {
+  const tabsContainer = document.getElementById('source-tabs');
+
+  if (openedSources.length === 0) {
+    tabsContainer.classList.remove('active');
+    tabsContainer.innerHTML = '<div class="editor-tab">Editor</div>';
+  } else {
+    tabsContainer.classList.add('active');
+
+    const editorTab = '<div class="editor-tab" onclick="switchToEditor()">Editor</div>';
+    const sourceTabs = openedSources.map((source, index) => `
+      <div class="source-tab ${index === currentSourceIndex ? 'active-tab' : ''}" onclick="switchToSource(${index})">
+        <div class="source-tab-title">${escapeHtml(source.title)}</div>
+        <div class="source-tab-close" onclick="event.stopPropagation(); closeSourceTab(${index})">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </div>
+      </div>
+    `).join('');
+
+    tabsContainer.innerHTML = editorTab + sourceTabs;
+  }
+}
+
+// Show split view with source
+function showSplitView(source) {
+  const regularView = document.getElementById('regular-editor-view');
+  const splitView = document.getElementById('split-view');
+  const sourceViewer = document.getElementById('source-viewer');
+  const sourceTitle = document.getElementById('source-title');
+
+  // Hide regular view, show split view
+  regularView.style.display = 'none';
+  splitView.classList.add('active');
+
+  // Update source panel
+  sourceTitle.textContent = source.title;
+
+  // Try to load the source content
+  if (source.url) {
+    // Try iframe first
+    sourceViewer.innerHTML = `<iframe src="${source.url}" sandbox="allow-same-origin allow-scripts"></iframe>`;
+
+    // If iframe fails, show summary
+    setTimeout(() => {
+      const iframe = sourceViewer.querySelector('iframe');
+      if (iframe) {
+        iframe.onerror = () => {
+          sourceViewer.innerHTML = `
+            <div class="source-content">
+              <h1>${escapeHtml(source.title)}</h1>
+              <p style="margin-bottom: 12px;"><a href="${source.url}" target="_blank" rel="noopener" style="color: var(--blue);">Open in new tab →</a></p>
+              <p>${escapeHtml(source.summary)}</p>
+            </div>
+          `;
+        };
+      }
+    }, 100);
+  } else {
+    sourceViewer.innerHTML = `
+      <div class="source-content">
+        <h1>${escapeHtml(source.title)}</h1>
+        <p>${escapeHtml(source.summary)}</p>
+      </div>
+    `;
+  }
+
+  // Sync editor content
+  syncEditorContent();
+}
+
+// Switch to a source tab
+function switchToSource(index) {
+  currentSourceIndex = index;
+  updateSourceTabs();
+  showSplitView(openedSources[index]);
+}
+
+// Switch back to editor only view
+function switchToEditor() {
+  const regularView = document.getElementById('regular-editor-view');
+  const splitView = document.getElementById('split-view');
+
+  splitView.classList.remove('active');
+  regularView.style.display = 'flex';
+
+  currentSourceIndex = -1;
+  updateSourceTabs();
+
+  // Sync editor content
+  syncEditorContent();
+}
+
+// Close split view
+function closeSplitView() {
+  if (currentSourceIndex !== -1 && openedSources[currentSourceIndex]) {
+    closeSourceTab(currentSourceIndex);
+  } else {
+    switchToEditor();
+  }
+}
+
+// Close a source tab
+function closeSourceTab(index) {
+  openedSources.splice(index, 1);
+
+  if (openedSources.length === 0) {
+    switchToEditor();
+  } else {
+    // Switch to previous tab or first tab
+    const newIndex = Math.max(0, index - 1);
+    currentSourceIndex = newIndex;
+    updateSourceTabs();
+    showSplitView(openedSources[newIndex]);
+  }
+}
+
+// Sync editor content between views
+function syncEditorContent() {
+  const mainEditor = document.getElementById('main-editor');
+  const splitEditor = document.getElementById('split-editor');
+
+  if (currentSourceIndex === -1) {
+    // Copy from split to main
+    mainEditor.innerHTML = splitEditor.innerHTML;
+  } else {
+    // Copy from main to split
+    splitEditor.innerHTML = mainEditor.innerHTML;
+  }
+}
+
+// Add event listeners to library checkboxes
+document.addEventListener('change', function(e) {
+  if (e.target.type === 'checkbox' && e.target.closest('#library-table-body')) {
+    updateAddToJournalButton();
+  }
+});
+
+// Supabase integration functions
+async function saveLibraryToSupabase(items) {
+  try {
+    const res = await fetch('/api/library/save', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to save to database');
+    return data;
+  } catch (err) {
+    console.error('Error saving to Supabase:', err);
+    return null;
+  }
+}
+
+async function loadLibraryFromSupabase() {
+  try {
+    const res = await fetch('/api/library');
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to load from database');
+    return data.items || [];
+  } catch (err) {
+    console.error('Error loading from Supabase:', err);
+    return [];
+  }
+}
+
+async function saveJournalSourcesToSupabase(journalId, sources) {
+  try {
+    const res = await fetch(`/api/journals/${journalId}/sources`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sources })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to save sources');
+    return data;
+  } catch (err) {
+    console.error('Error saving journal sources:', err);
+    return null;
+  }
+}
+
+async function loadJournalSourcesFromSupabase(journalId) {
+  try {
+    const res = await fetch(`/api/journals/${journalId}/sources`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to load sources');
+    return data.sources || [];
+  } catch (err) {
+    console.error('Error loading journal sources:', err);
+    return [];
+  }
+}
+
+// Toggle select all checkboxes in library
+function toggleSelectAll(checkbox) {
+  const checkboxes = document.querySelectorAll('#library-table-body input[type="checkbox"]');
+  checkboxes.forEach(cb => {
+    cb.checked = checkbox.checked;
+  });
+  updateAddToJournalButton();
+}
+
+// Close sources sidebar when clicking outside
+document.addEventListener('click', function(e) {
+  const sidebar = document.getElementById('sources-sidebar');
+  const sourcesBtn = e.target.closest('.sources-btn');
+
+  if (sidebar && sidebar.classList.contains('active') && !sidebar.contains(e.target) && !sourcesBtn) {
+    sidebar.classList.remove('active');
+  }
+});
+
+// Chat functionality
+let chatMessages = [];
+let mentionedSource = null;
+
+function toggleChatSidebar() {
+  const sidebar = document.getElementById('chat-sidebar');
+  const toggleBtn = document.getElementById('chat-toggle-btn');
+
+  sidebar.classList.toggle('active');
+
+  // Show/hide toggle button
+  if (sidebar.classList.contains('active')) {
+    toggleBtn.style.display = 'none';
+  } else {
+    // Only show toggle button in journal editor
+    if (document.getElementById('journal-editor').classList.contains('active')) {
+      toggleBtn.style.display = 'flex';
+    }
+  }
+}
+
+function showMentionDropdown() {
+  const dropdown = document.getElementById('mention-dropdown');
+  const sources = journalSources[currentJournalId] || [];
+
+  if (sources.length === 0) {
+    dropdown.innerHTML = '<div class="mention-item" style="color:#888;">No sources available</div>';
+  } else {
+    dropdown.innerHTML = sources.map((source, index) => `
+      <div class="mention-item" onclick="selectMentionedSource(${index})">
+        <div class="mention-item-title">${escapeHtml(source.title)}</div>
+        <div class="mention-item-url">${escapeHtml(source.url)}</div>
+      </div>
+    `).join('');
+  }
+
+  dropdown.classList.add('active');
+}
+
+function selectMentionedSource(index) {
+  const sources = journalSources[currentJournalId] || [];
+  mentionedSource = sources[index];
+
+  const indicator = document.getElementById('chat-file-indicator');
+  const fileName = document.getElementById('chat-file-name');
+
+  fileName.textContent = mentionedSource.title;
+  indicator.classList.add('active');
+
+  // Hide dropdown
+  document.getElementById('mention-dropdown').classList.remove('active');
+
+  // Focus input
+  document.getElementById('chat-input').focus();
+}
+
+function clearMentionedSource() {
+  mentionedSource = null;
+  document.getElementById('chat-file-indicator').classList.remove('active');
+}
+
+// Close mention dropdown when clicking outside
+document.addEventListener('click', function(e) {
+  const dropdown = document.getElementById('mention-dropdown');
+  const mentionBtn = e.target.closest('.chat-mention-btn');
+
+  if (dropdown && !dropdown.contains(e.target) && !mentionBtn) {
+    dropdown.classList.remove('active');
+  }
+});
+
+async function sendChatMessage() {
+  const input = document.getElementById('chat-input');
+  const message = input.value.trim();
+
+  if (!message) return;
+
+  // Add user message to chat
+  addMessageToChat('user', message);
+
+  // Clear input
+  input.value = '';
+  input.style.height = 'auto';
+
+  // Hide suggestions
+  document.getElementById('chat-suggestions').style.display = 'none';
+
+  // Prepare sources context
+  let sourcesToSend = [];
+  if (mentionedSource) {
+    sourcesToSend = [mentionedSource];
+  } else {
+    sourcesToSend = journalSources[currentJournalId] || [];
+  }
+
+  // Show loading
+  const messagesContainer = document.getElementById('chat-messages');
+  const loadingId = 'loading-' + Date.now();
+  messagesContainer.innerHTML += `
+    <div class="chat-message" id="${loadingId}">
+      <div class="chat-bubble assistant">
+        <div class="chat-loading">
+          <div class="chat-loading-dot"></div>
+          <div class="chat-loading-dot"></div>
+          <div class="chat-loading-dot"></div>
+        </div>
+      </div>
+    </div>
+  `;
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+  // Build messages array for API
+  const apiMessages = chatMessages.map(m => ({
+    role: m.role,
+    content: m.content
+  }));
+  apiMessages.push({ role: 'user', content: message });
+
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        messages: apiMessages,
+        sources: sourcesToSend
+      })
+    });
+
+    const data = await res.json();
+
+    // Remove loading
+    document.getElementById(loadingId)?.remove();
+
+    if (!res.ok) throw new Error(data.error || 'Chat failed');
+
+    // Add assistant response
+    addMessageToChat('assistant', data.reply);
+
+    // Update chat history
+    chatMessages.push({ role: 'user', content: message });
+    chatMessages.push({ role: 'assistant', content: data.reply });
+
+  } catch (err) {
+    // Remove loading
+    document.getElementById(loadingId)?.remove();
+
+    addMessageToChat('assistant', 'Sorry, I encountered an error: ' + err.message);
+  }
+}
+
+function addMessageToChat(role, content) {
+  const messagesContainer = document.getElementById('chat-messages');
+  const messageDiv = document.createElement('div');
+  messageDiv.className = `chat-message ${role}`;
+
+  const bubbleDiv = document.createElement('div');
+  bubbleDiv.className = `chat-bubble ${role}`;
+
+  // Simple markdown-like formatting
+  let formattedContent = content
+    // Bold
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    // Italic
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    // Code blocks
+    .replace(/`(.+?)`/g, '<code>$1</code>')
+    // Line breaks
+    .replace(/\n/g, '<br>');
+
+  bubbleDiv.innerHTML = formattedContent;
+
+  messageDiv.appendChild(bubbleDiv);
+  messagesContainer.appendChild(messageDiv);
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+function askSuggestion(button) {
+  const question = button.textContent;
+  document.getElementById('chat-input').value = question;
+  sendChatMessage();
+}
+
+// Auto-resize chat input
+document.getElementById('chat-input')?.addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+});
+
+// Send on Enter (Shift+Enter for new line)
+document.getElementById('chat-input')?.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendChatMessage();
+  }
+});
+
+// Make editors clickable and focusable
+document.addEventListener('DOMContentLoaded', function() {
+  const mainEditor = document.getElementById('main-editor');
+  const splitEditor = document.getElementById('split-editor');
+
+  if (mainEditor) {
+    mainEditor.addEventListener('click', function() {
+      this.focus();
+    });
+  }
+
+  if (splitEditor) {
+    splitEditor.addEventListener('click', function() {
+      this.focus();
+    });
+  }
+});
 </script>
 </body></html>
